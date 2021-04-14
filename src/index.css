@@ -257,3 +257,8 @@ p {
   background: var(--danger-color);
   color: #fff;
 }
+
+.badge-small {
+  font-size: 0.5em;
+  padding: 0.45em;
+}

@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
         payload: res.data.user,
         token: res.data.token
       });
-      // setAuthToken(res.data.token);
+      setAuthToken(res.data.token);
     } catch (err) {
       dispatch({ type: REGISTER_FAIL, payload: err.response.data.error });
     }
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
         payload: res.data.user,
         token: res.data.token
       });
-      // setAuthToken(res.data.token);
+      setAuthToken(res.data.token);
     } catch (err) {
       // console.log(err.response);
       dispatch({ type: LOGIN_FAIL, payload: err.response.data.error });

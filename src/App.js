@@ -1,5 +1,14 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Navbar, Register, Login, PrivateRoute, Alerts } from './components';
+import {
+  Navbar,
+  Register,
+  Login,
+  PrivateRoute,
+  Alerts,
+  NotFound,
+  Reviews,
+  CreateReview
+} from './components';
 import { Home, BootcampPage } from './pages';
 import { BootcampsProvider } from './context/bootcampsContext';
 import { AuthProvider } from './context/authContext';
@@ -21,8 +30,13 @@ function App() {
               </Route>
               <Route path='/login' component={Login} />
               <Route path='/register' component={Register} />
+              <Route exact path='/createreview/:id' component={CreateReview} />
+              <Route exact path='/bootcamps/:id/reviews' component={Reviews} />
               <PrivateRoute path='/bootcamps/:id' component={BootcampPage} />
 
+              <Route>
+                <NotFound />
+              </Route>
               {/* 
             <Route path='/bootcamps/:id'>
               <BootcampPage />

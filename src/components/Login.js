@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import AlertContext from '../context/alert/alertContext';
+import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import { ToastContainer } from 'react-toastify';
 import { notifyError } from '../utils/toastNotify';
@@ -34,7 +35,7 @@ const Login = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    if (email === '' || password === '') {
+    if (email.trim() === '' || password.trim() === '') {
       notifyError(`❕ Please enter email and password`);
       // notify('❕ Please enter email and passord');
       // setAlert('Please enter all fields', 'danger', 3000);
@@ -115,9 +116,7 @@ const Login = props => {
                   </div>
                 </form>
                 <p>
-                  {' '}
-                  Forgot Password?{' '}
-                  <a href='reset-password.html'>Reset Password</a>
+                  Not Registered? <Link to='/register'>Register here</Link>
                 </p>
               </div>
             </div>

@@ -6,6 +6,10 @@ import Register from './Register';
 import Login from './Login';
 import PrivateRoute from './PrivateRoute';
 import Alerts from './Alerts';
+import NotFound from './NotFound';
+import Reviews from './Reviews';
+import Review from './Review';
+import CreateReview from './CreateReview';
 export {
   BootCamps,
   Navbar,
@@ -14,5 +18,9 @@ export {
   Register,
   Login,
   PrivateRoute,
-  Alerts
+  Alerts,
+  NotFound,
+  Reviews,
+  Review,
+  CreateReview
 };

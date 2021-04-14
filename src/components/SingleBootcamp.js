@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { useParams, Link } from 'react-router-dom';
+import { FaCheck, FaTimes, FaPencilAlt, FaComments } from 'react-icons/fa';
 import Loading from './Loading';
 import Course from './Course';
 import { useBootcampsContext } from '../context/bootcampsContext';
@@ -15,11 +15,14 @@ const SingleBootcamp = () => {
   } = useBootcampsContext();
   const {
     averageRating,
+    averageCost,
+    description,
     photo,
     housing,
     jobAssistance,
     jobGuarantee,
-    acceptGi
+    acceptGi,
+    name
   } = singleBootcamp;
 
   useEffect(() => {
@@ -36,15 +39,13 @@ const SingleBootcamp = () => {
       <div className='container'>
         <div className='row'>
           <div className='col-md-8'>
-            <h1>{singleBootcamp.name}</h1>
+            <h1>{name}</h1>
 
-            <p>{singleBootcamp.description}</p>
+            <p>{description}</p>
 
             <p className='lead mb-4'>
               Average Course Cost:{' '}
-              <span className='text-primary'>
-                ${singleBootcamp.averageCost}
-              </span>
+              <span className='text-primary'>${averageCost}</span>
             </p>
 
             {courses.map(course => {
@@ -53,14 +54,14 @@ const SingleBootcamp = () => {
           </div>
 
           <div className='col-md-4'>
-            {photo ? (
+            {photo && photo !== 'no-photo.jpg' ? (
               <img
                 src={`http://localhost:5000/uploads/${photo}`}
                 alt='bootcamp'
                 className='img-thumbnail'
               />
             ) : (
-              <h4>No image</h4>
+              <h4 style={{ textAlign: 'center' }}>No image</h4>
             )}
 
             <h1 className='text-center my-4'>
@@ -72,12 +73,24 @@ const SingleBootcamp = () => {
               Rating
             </h1>
 
-            <a href='reviews.html' className='btn btn-dark btn-block my-3'>
-              <i className='fas fa-comments'></i> Read Reviews
-            </a>
-            <a href='add-review.html' className='btn btn-light btn-block my-3'>
-              <i className='fas fa-pencil-alt'></i> Write a Review
-            </a>
+            <Link
+              to={{
+                pathname: `/bootcamps/${id}/reviews`,
+                state: { name, averageRating }
+              }}
+              className='btn btn-dark btn-block my-2 w-100'
+            >
+              <FaComments /> Read Reviews
+            </Link>
+            <Link
+              to={{
+                pathname: `/createreview/${id}`,
+                state: { name }
+              }}
+              className='btn btn-light btn-block my-2 w-100'
+            >
+              <FaPencilAlt /> Write a Review
+            </Link>
 
             {/* <div id='map' style='width: 100%; height: 300px;'></div> */}
 
