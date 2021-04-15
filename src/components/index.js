@@ -10,6 +10,8 @@ import NotFound from './NotFound';
 import Reviews from './Reviews';
 import Review from './Review';
 import CreateReview from './CreateReview';
+import ReviewItem from './ReviewItem';
+
 export {
   BootCamps,
   Navbar,
@@ -22,5 +24,6 @@ export {
   NotFound,
   Reviews,
   Review,
-  CreateReview
+  CreateReview,
+  ReviewItem
 };

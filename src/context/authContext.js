@@ -13,7 +13,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  USER_UPDATED
 } from '../actions';
 
 const initialState = {
@@ -28,6 +29,11 @@ const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Update User
+  const updateUser = (name, email) => {
+    dispatch({ type: USER_UPDATED, payload: { name, email } });
+  };
 
   // Load User
   const loadUser = async () => {
@@ -125,7 +131,8 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         clearErrors,
-        loadUser
+        loadUser,
+        updateUser
       }}
     >
       {children}

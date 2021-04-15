@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaChevronLeft } from 'react-icons/fa';
@@ -8,10 +8,26 @@ import { baseUrl } from '../utils/constants';
 
 const CreateReview = props => {
   const { id } = useParams();
-  const { name } = props.location.state;
+  const {
+    name,
+    editMode,
+    bootcampName,
+    reviewText,
+    reviewTitle,
+    reviewRating,
+    reviewId
+  } = props.location.state;
   const [rating, setRating] = useState(8);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+
+  useEffect(() => {
+    if (editMode) {
+      setRating(reviewRating);
+      setTitle(reviewTitle);
+      setText(reviewText);
+    }
+  }, [editMode, reviewRating, reviewText, reviewTitle]);
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -20,12 +36,23 @@ const CreateReview = props => {
     }
 
     try {
-      const response = await axios.post(`${baseUrl}/bootcamps/${id}/reviews`, {
-        title,
-        text,
-        rating,
-        bootcamp: id
-      });
+      let response;
+
+      if (editMode) {
+        response = await axios.put(`${baseUrl}/reviews/${reviewId}`, {
+          title,
+          text,
+          rating,
+          bootcamp: id
+        });
+      } else {
+        response = await axios.post(`${baseUrl}/bootcamps/${id}/reviews`, {
+          title,
+          text,
+          rating,
+          bootcamp: id
+        });
+      }
 
       props.history.push({
         pathname: `/bootcamps/${id}/reviews`,
@@ -36,7 +63,8 @@ const CreateReview = props => {
       });
       // console.log('New post was created.');
     } catch (e) {
-      console.log(e.response.data.error);
+      console.log(e);
+      // console.log(e.response.data.error);
       if (e.response.data.error === 'Duplicate field value entered') {
         notifyError(`❕ Review already entered for this Bootcamp`);
       } else if (
@@ -70,8 +98,8 @@ const CreateReview = props => {
               <Link to={`/bootcamps/${id}`} className='btn btn-secondary my-3'>
                 <FaChevronLeft /> Bootcamp Info
               </Link>
-              <h1 className='mb-2'>{name}</h1>
-              <h3 className='mb-4'>Write a Review</h3>
+              <h1 className='mb-2'>{name ? name : bootcampName}</h1>
+              <h3 className='mb-4'>{editMode ? 'Edit' : 'Write'} Review</h3>
               <p>
                 You must have attended and graduated this bootcamp to review
               </p>

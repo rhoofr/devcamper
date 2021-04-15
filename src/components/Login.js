@@ -33,7 +33,7 @@ const Login = props => {
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (email.trim() === '' || password.trim() === '') {
       notifyError(`❕ Please enter email and password`);
@@ -72,7 +72,7 @@ const Login = props => {
                   Log in to list your bootcamp or rate, review and favorite
                   bootcamps
                 </p>
-                <form onSubmit={onSubmit} noValidate>
+                <form onSubmit={handleSubmit} noValidate>
                   <div className='mb-3'>
                     <label htmlFor='email' className='form-label'>
                       Email address

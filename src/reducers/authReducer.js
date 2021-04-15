@@ -8,7 +8,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  USER_UPDATED
 } from '../actions';
 
 const authReducer = (state, action) => {
@@ -48,6 +49,15 @@ const authReducer = (state, action) => {
         loading: false,
         user: null,
         error: action.payload
+      };
+    case USER_UPDATED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: action.payload.name,
+          email: action.payload.email
+        }
       };
     case CLEAR_ERRORS:
       return {

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { useBootcampsContext } from '../context/bootcampsContext';
+import { notifyError } from '../utils/toastNotify';
 // import Error from './Error';
 import Loading from './Loading';
-
+import { baseUrl } from '../utils/constants';
 import Bootcamp from './Bootcamp';
 
 const BootCamps = () => {
   const {
     bootcamps,
     bootcampsLoading,
+    fetchBootcamps,
     fetchBootcampsWithinRadius,
     fetchBootcampsWithFilter
   } = useBootcampsContext();
@@ -23,10 +24,10 @@ const BootCamps = () => {
   const handleRadiusSubmit = e => {
     e.preventDefault();
     if (!miles || miles.length < 1) {
-      return notify('please enter the distance in miles');
+      return notifyError('🔍 Please enter the distance in miles');
     }
     if (!zipcode || zipcode.length < 5) {
-      return notify('Please enter a 5 digit zip code');
+      return notifyError('🔍 Please enter a 5 digit zip code');
     }
     setAverageRating('any');
     setAverageCost('any');
@@ -40,16 +41,14 @@ const BootCamps = () => {
     fetchBootcampsWithFilter(averageRating, averageCost);
   };
 
-  const notify = msg =>
-    toast.error(`🔍 ${msg}`, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
+  const handleClearFilters = e => {
+    e.preventDefault();
+    setAverageRating('any');
+    setAverageCost('any');
+    setMiles('');
+    setZipcode('');
+    fetchBootcamps(`${baseUrl}/bootcamps`);
+  };
 
   if (bootcampsLoading) {
     return <Loading />;
@@ -75,7 +74,7 @@ const BootCamps = () => {
       <div className='row'>
         <div className='col-md-4'>
           <div className='card card-body mb-4'>
-            <h4 className='mb-3'>By Location</h4>
+            <h4 className='mb-3'>Filter by Location</h4>
             <form onSubmit={handleRadiusSubmit}>
               <div className='row'>
                 <div className='col-md-6'>
@@ -111,7 +110,14 @@ const BootCamps = () => {
               <input
                 type='submit'
                 value='Find Bootcamps'
-                className='btn btn-primary btn-block w-100'
+                className='btn btn-primary btn-block w-100 mb-2'
+              />
+              <input
+                type='button'
+                value='Clear Filter'
+                className='btn btn-danger btn-block w-100'
+                onClick={handleClearFilters}
+                disabled={miles === '' && zipcode === ''}
               />
             </form>
           </div>
@@ -162,7 +168,14 @@ const BootCamps = () => {
               <input
                 type='submit'
                 value='Find Bootcamps'
-                className='btn btn-primary btn-block w-100'
+                className='btn btn-primary btn-block w-100 mb-2'
+              />
+              <input
+                type='button'
+                value='Clear Filters'
+                className='btn btn-danger btn-block w-100'
+                onClick={handleClearFilters}
+                disabled={averageCost === 'any' && averageRating === 'any'}
               />
             </form>
           </div>

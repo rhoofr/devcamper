@@ -9,7 +9,14 @@ import {
   Reviews,
   CreateReview
 } from './components';
-import { Home, BootcampPage } from './pages';
+import {
+  Home,
+  BootcampPage,
+  ManageReviewsPage,
+  ManageAccountPage,
+  UpdatePasswordPage,
+  ManageBootcampsPage
+} from './pages';
 import { BootcampsProvider } from './context/bootcampsContext';
 import { AuthProvider } from './context/authContext';
 import AlertState from './context/alert/AlertState';
@@ -30,9 +37,25 @@ function App() {
               </Route>
               <Route path='/login' component={Login} />
               <Route path='/register' component={Register} />
+              <PrivateRoute
+                path='/managereviews'
+                component={ManageReviewsPage}
+              />
+              <PrivateRoute
+                path='/manageaccount'
+                component={ManageAccountPage}
+              />
+              <PrivateRoute
+                path='/updatepassword'
+                component={UpdatePasswordPage}
+              />
+              <PrivateRoute
+                path='/managebootcamps'
+                component={ManageBootcampsPage}
+              />
               <Route exact path='/createreview/:id' component={CreateReview} />
               <Route exact path='/bootcamps/:id/reviews' component={Reviews} />
-              <PrivateRoute path='/bootcamps/:id' component={BootcampPage} />
+              <Route exact path='/bootcamps/:id' component={BootcampPage} />
 
               <Route>
                 <NotFound />

@@ -27,6 +27,7 @@ const Reviews = ({ location }) => {
           console.log('no data');
         }
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }

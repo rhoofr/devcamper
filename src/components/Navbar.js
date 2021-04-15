@@ -37,13 +37,13 @@ const Nav = () => {
           <FaUser /> Account
         </a>
         <div className='dropdown-menu'>
-          <Link className='dropdown-item' to='manage-bootcamp.html'>
+          <Link className='dropdown-item' to='/managebootcamps'>
             Manage Bootcamp
           </Link>
-          <Link className='dropdown-item' to='manage-reviews.html'>
+          <Link className='dropdown-item' to='/managereviews'>
             Manage Reviews
           </Link>
-          <Link className='dropdown-item' to='manage-account.html'>
+          <Link className='dropdown-item' to='/manageaccount'>
             Manage Account
           </Link>
           <div className='dropdown-divider'></div>

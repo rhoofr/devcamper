@@ -120,6 +120,7 @@ export const BootcampsProvider = ({ children }) => {
         ...state,
         openSidebar,
         closeSidebar,
+        fetchBootcamps,
         fetchSingleBootcamp,
         fetchBootcampsWithinRadius,
         fetchBootcampsWithFilter
