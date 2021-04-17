@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../utils/constants';
 
 const Bootcamp = ({
   _id: id,
@@ -19,10 +20,9 @@ const Bootcamp = ({
         <div className='col-md-4'>
           {photo !== 'no-photo.jpg' && (
             <img
-              src={`http://localhost:5000/uploads/${photo}`}
+              src={`${baseUrl}/uploads/${photo}`}
               alt='camp'
-              className='card-image'
-              style={{ height: '140px', objectFit: 'cover' }}
+              className='card-img'
             />
           )}
         </div>

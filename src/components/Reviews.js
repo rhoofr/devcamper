@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { FaChevronLeft, FaPencilAlt } from 'react-icons/fa';
 import Loading from './Loading';
 import Review from './Review';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 
 const Reviews = ({ location }) => {
   const { name, averageRating } = location.state;
@@ -17,9 +17,12 @@ const Reviews = ({ location }) => {
 
     async function fetchReviews() {
       try {
-        const response = await axios.get(`${baseUrl}/bootcamps/${id}/reviews`, {
-          cancelToken: axiosRequest.token
-        });
+        const response = await axios.get(
+          `${baseAPIUrl}/bootcamps/${id}/reviews`,
+          {
+            cancelToken: axiosRequest.token
+          }
+        );
         if (response.data) {
           setReviews(response.data.data);
           setLoading(false);

@@ -15,7 +15,8 @@ import {
   ManageReviewsPage,
   ManageAccountPage,
   UpdatePasswordPage,
-  ManageBootcampsPage
+  ManageBootcampsPage,
+  AddEditBootcampPage
 } from './pages';
 import { BootcampsProvider } from './context/bootcampsContext';
 import { AuthProvider } from './context/authContext';
@@ -53,6 +54,14 @@ function App() {
                 path='/managebootcamps'
                 component={ManageBootcampsPage}
               />
+              <PrivateRoute
+                path='/addbootcamp'
+                component={AddEditBootcampPage}
+              />
+              <PrivateRoute
+                path='/editbootcamp'
+                component={AddEditBootcampPage}
+              />
               <Route exact path='/createreview/:id' component={CreateReview} />
               <Route exact path='/bootcamps/:id/reviews' component={Reviews} />
               <Route exact path='/bootcamps/:id' component={BootcampPage} />
@@ -65,21 +74,21 @@ function App() {
               <BootcampPage />
             </Route>
             <Route exact path='/about'>
-          <About />
-        </Route>
-        <Route exact path='/cart'>
-          <Cart />
-        </Route>
-        <Route exact path='/products'>
-          <Products />
-        </Route>
-        <Route exact path='/products/:id' children={<SingleProduct />} />
-        <PrivateRoute exact path='/checkout'>
-          <Checkout />
-        </PrivateRoute>
-        <Route path='*'>
-          <Error />
-        </Route> */}
+              <About />
+            </Route>
+            <Route exact path='/cart'>
+              <Cart />
+            </Route>
+            <Route exact path='/products'>
+              <Products />
+            </Route>
+            <Route exact path='/products/:id' children={<SingleProduct />} />
+            <PrivateRoute exact path='/checkout'>
+              <Checkout />
+            </PrivateRoute>
+            <Route path='*'>
+              <Error />
+            </Route> */}
             </Switch>
             {/*<Footer /> */}
           </Router>

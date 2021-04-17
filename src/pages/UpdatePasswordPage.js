@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 
 const UpdatePasswordPage = () => {
   const [password, setPassword] = useState('');
@@ -19,7 +19,7 @@ const UpdatePasswordPage = () => {
       return notifyError(`❕ Min length for new password is 6 chars`);
     } else {
       try {
-        await axios.put(`${baseUrl}/auth/updatepassword`, {
+        await axios.put(`${baseAPIUrl}/auth/updatepassword`, {
           currentPassword: password,
           newPassword: newPassword
         });

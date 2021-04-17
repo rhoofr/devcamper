@@ -13,7 +13,7 @@ import { useAuthContext } from '../context/authContext';
 const Nav = () => {
   // const { openSidebar } = useProductsContext();
   // const { myUser } = useUserContext();
-  const { isAuthenticated, logout, loadUser } = useAuthContext();
+  const { user, isAuthenticated, logout, loadUser } = useAuthContext();
 
   useEffect(() => {
     loadUser();
@@ -37,12 +37,16 @@ const Nav = () => {
           <FaUser /> Account
         </a>
         <div className='dropdown-menu'>
-          <Link className='dropdown-item' to='/managebootcamps'>
-            Manage Bootcamp
-          </Link>
-          <Link className='dropdown-item' to='/managereviews'>
-            Manage Reviews
-          </Link>
+          {user && user.role !== 'user' && (
+            <Link className='dropdown-item' to='/managebootcamps'>
+              Manage Bootcamp
+            </Link>
+          )}
+          {user && user.role !== 'publisher' && (
+            <Link className='dropdown-item' to='/managereviews'>
+              Manage Reviews
+            </Link>
+          )}
           <Link className='dropdown-item' to='/manageaccount'>
             Manage Account
           </Link>

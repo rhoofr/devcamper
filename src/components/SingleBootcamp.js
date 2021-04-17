@@ -4,6 +4,7 @@ import { FaCheck, FaTimes, FaPencilAlt, FaComments } from 'react-icons/fa';
 import Loading from './Loading';
 import Course from './Course';
 import { useBootcampsContext } from '../context/bootcampsContext';
+import { baseUrl } from '../utils/constants';
 
 const SingleBootcamp = () => {
   const { id } = useParams();
@@ -56,7 +57,7 @@ const SingleBootcamp = () => {
           <div className='col-md-4'>
             {photo && photo !== 'no-photo.jpg' ? (
               <img
-                src={`http://localhost:5000/uploads/${photo}`}
+                src={`${baseUrl}/uploads/${photo}`}
                 alt='bootcamp'
                 className='img-thumbnail'
               />

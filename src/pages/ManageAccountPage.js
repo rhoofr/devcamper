@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 
 const ManageAccountPage = () => {
   const { user, updateUser } = useAuthContext();
@@ -23,7 +23,7 @@ const ManageAccountPage = () => {
     }
 
     try {
-      await axios.put(`${baseUrl}/auth/updatedetails`, { name, email });
+      await axios.put(`${baseAPIUrl}/auth/updatedetails`, { name, email });
       updateUser(name, email);
 
       notifySuccess('✅ Account was updated');

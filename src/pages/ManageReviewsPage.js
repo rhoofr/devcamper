@@ -5,7 +5,7 @@ import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import Loading from '../components/Loading';
 import ReviewItem from '../components/ReviewItem';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 
 const ManageReviewsPage = () => {
   const { user } = useAuthContext();
@@ -18,19 +18,10 @@ const ManageReviewsPage = () => {
     e.preventDefault();
 
     try {
-      await axios.delete(`${baseUrl}/reviews/${idToDelete}`);
+      await axios.delete(`${baseAPIUrl}/reviews/${idToDelete}`);
       setUpdatedCount(prev => prev + 1);
 
       notifySuccess('✅ Review was deleted');
-
-      // props.history.push({
-      //   pathname: `/bootcamps/${id}/reviews`,
-      //   state: {
-      //     name: response.data.bootcamp.name,
-      //     averageRating: response.data.bootcamp.averageRating
-      //   }
-      // });
-      // console.log('New post was created.');
     } catch (e) {
       console.log(e.response.data.error);
       notifyError('❌ An error occurred deleting review');
@@ -43,7 +34,7 @@ const ManageReviewsPage = () => {
     async function fetchReviews() {
       try {
         const response = await axios.get(
-          `${baseUrl}/reviews/user/${user._id}`,
+          `${baseAPIUrl}/reviews/user/${user._id}`,
           {
             cancelToken: axiosRequest.token
           }
@@ -139,18 +130,19 @@ const ManageReviewsPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {reviews.map(review => {
-                    return (
-                      <ReviewItem
-                        key={review._id}
-                        id={review._id}
-                        bootcampId={review.bootcamp._id}
-                        name={review.bootcamp.name}
-                        setIdToDelete={setIdToDelete}
-                        {...review}
-                      />
-                    );
-                  })}
+                  {reviews &&
+                    reviews.map(review => {
+                      return (
+                        <ReviewItem
+                          key={review._id}
+                          id={review._id}
+                          bootcampId={review.bootcamp._id}
+                          name={review.bootcamp.name}
+                          setIdToDelete={setIdToDelete}
+                          {...review}
+                        />
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

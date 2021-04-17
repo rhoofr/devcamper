@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import reducer from '../reducers/bootcampsReducer';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -59,7 +59,7 @@ export const BootcampsProvider = ({ children }) => {
   };
 
   const fetchBootcampsWithinRadius = async (zipcode, miles) => {
-    fetchBootcamps(`${baseUrl}/bootcamps/radius/${zipcode}/${miles}`);
+    fetchBootcamps(`${baseAPIUrl}/bootcamps/radius/${zipcode}/${miles}`);
   };
 
   const fetchBootcampsWithFilter = async (rating, cost) => {
@@ -76,12 +76,12 @@ export const BootcampsProvider = ({ children }) => {
       }
     }
 
-    fetchBootcamps(`${baseUrl}/bootcamps/${queryParam}`);
+    fetchBootcamps(`${baseAPIUrl}/bootcamps/${queryParam}`);
   };
 
   const fetchCoursesForBootcamp = async id => {
     try {
-      const response = await axios(`${baseUrl}/bootcamps/${id}/courses`);
+      const response = await axios(`${baseAPIUrl}/bootcamps/${id}/courses`);
       const courses = response.data.data;
 
       if (courses) {
@@ -97,7 +97,7 @@ export const BootcampsProvider = ({ children }) => {
     dispatch({ type: GET_SINGLE_BOOTCAMP_BEGIN });
 
     try {
-      const response = await axios(`${baseUrl}/bootcamps/${id}`);
+      const response = await axios(`${baseAPIUrl}/bootcamps/${id}`);
       const bootcamp = response.data.data;
 
       if (response) {
@@ -111,7 +111,7 @@ export const BootcampsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchBootcamps(`${baseUrl}/bootcamps`);
+    fetchBootcamps(`${baseAPIUrl}/bootcamps`);
   }, []);
 
   return (

@@ -4,7 +4,7 @@ import { useBootcampsContext } from '../context/bootcampsContext';
 import { notifyError } from '../utils/toastNotify';
 // import Error from './Error';
 import Loading from './Loading';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 import Bootcamp from './Bootcamp';
 
 const BootCamps = () => {
@@ -47,7 +47,7 @@ const BootCamps = () => {
     setAverageCost('any');
     setMiles('');
     setZipcode('');
-    fetchBootcamps(`${baseUrl}/bootcamps`);
+    fetchBootcamps(`${baseAPIUrl}/bootcamps`);
   };
 
   if (bootcampsLoading) {

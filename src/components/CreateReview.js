@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FaChevronLeft } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 import { notifyError } from '../utils/toastNotify';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 
 const CreateReview = props => {
   const { id } = useParams();
@@ -39,14 +39,14 @@ const CreateReview = props => {
       let response;
 
       if (editMode) {
-        response = await axios.put(`${baseUrl}/reviews/${reviewId}`, {
+        response = await axios.put(`${baseAPIUrl}/reviews/${reviewId}`, {
           title,
           text,
           rating,
           bootcamp: id
         });
       } else {
-        response = await axios.post(`${baseUrl}/bootcamps/${id}/reviews`, {
+        response = await axios.post(`${baseAPIUrl}/bootcamps/${id}/reviews`, {
           title,
           text,
           rating,

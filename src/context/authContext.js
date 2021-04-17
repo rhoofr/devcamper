@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useReducer } from 'react';
 import reducer from '../reducers/authReducer';
-import { baseUrl } from '../utils/constants';
+import { baseAPIUrl } from '../utils/constants';
 import setAuthToken from '../utils/setAuthToken';
 import {
   REGISTER_START,
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     }
     if (!state.isAuthenticated && localStorage.token) {
       try {
-        const res = await axios.get(`${baseUrl}/auth/me`);
+        const res = await axios.get(`${baseAPIUrl}/auth/me`);
 
         dispatch({ type: USER_LOADED, payload: res.data.user });
       } catch (err) {
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const res = await axios.post(
-        `${baseUrl}/auth/register`,
+        `${baseAPIUrl}/auth/register`,
         formData,
         config
       );
@@ -94,7 +94,11 @@ export const AuthProvider = ({ children }) => {
     };
 
     try {
-      const res = await axios.post(`${baseUrl}/auth/login`, formData, config);
+      const res = await axios.post(
+        `${baseAPIUrl}/auth/login`,
+        formData,
+        config
+      );
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -120,7 +124,7 @@ export const AuthProvider = ({ children }) => {
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   // useEffect(() => {
-  //   fetchBootcamps(`${baseUrl}/bootcamps`);
+  //   fetchBootcamps(`${baseAPIUrl}/bootcamps`);
   // }, []);
 
   return (

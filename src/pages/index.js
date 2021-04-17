@@ -4,6 +4,7 @@ import ManageReviewsPage from './ManageReviewsPage';
 import ManageAccountPage from './ManageAccountPage';
 import UpdatePasswordPage from './UpdatePasswordPage';
 import ManageBootcampsPage from './ManageBootcampsPage';
+import AddEditBootcampPage from './AddEditBootcampPage';
 
 export {
   Home,
@@ -11,5 +12,6 @@ export {
   ManageReviewsPage,
   ManageAccountPage,
   UpdatePasswordPage,
-  ManageBootcampsPage
+  ManageBootcampsPage,
+  AddEditBootcampPage
 };
