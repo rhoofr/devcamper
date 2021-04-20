@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import {
   Navbar,
   Register,
@@ -16,7 +17,9 @@ import {
   ManageAccountPage,
   UpdatePasswordPage,
   ManageBootcampsPage,
-  AddEditBootcampPage
+  AddEditBootcampPage,
+  AddEditCoursePage,
+  ManageCoursesPage
 } from './pages';
 import { BootcampsProvider } from './context/bootcampsContext';
 import { AuthProvider } from './context/authContext';
@@ -31,6 +34,7 @@ function App() {
           <Router>
             <Navbar />
             <Alerts />
+            <ToastContainer />
             {/* <Sidebar />*/}
             <Switch>
               <Route exact path='/'>
@@ -45,6 +49,10 @@ function App() {
               <PrivateRoute
                 path='/manageaccount'
                 component={ManageAccountPage}
+              />
+              <PrivateRoute
+                path='/managecourses'
+                component={ManageCoursesPage}
               />
               <PrivateRoute
                 path='/updatepassword'
@@ -62,7 +70,17 @@ function App() {
                 path='/editbootcamp'
                 component={AddEditBootcampPage}
               />
-              <Route exact path='/createreview/:id' component={CreateReview} />
+              <PrivateRoute path='/addcourse' component={AddEditCoursePage} />
+              <PrivateRoute
+                exact
+                path='/editcourse/:id'
+                component={AddEditCoursePage}
+              />
+              <PrivateRoute
+                exact
+                path='/createreview/:id'
+                component={CreateReview}
+              />
               <Route exact path='/bootcamps/:id/reviews' component={Reviews} />
               <Route exact path='/bootcamps/:id' component={BootcampPage} />
 

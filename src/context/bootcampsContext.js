@@ -11,7 +11,19 @@ import {
   GET_SINGLE_BOOTCAMP_BEGIN,
   GET_SINGLE_BOOTCAMP_SUCCESS,
   GET_SINGLE_BOOTCAMP_ERROR,
-  GET_BOOTCAMP_COURSES_SUCCESS
+  GET_BOOTCAMP_COURSES_SUCCESS,
+  SUBMIT_BOOTCAMP_PHOTO_SUCCESS,
+  SUBMIT_BOOTCAMP_PHOTO_ERROR,
+  DELETE_BOOTCAMP_SUCCESS,
+  DELETE_BOOTCAMP_ERROR,
+  ADD_BOOTCAMP_SUCCESS,
+  ADD_BOOTCAMP_ERROR,
+  UPDATE_BOOTCAMP_SUCCESS,
+  UPDATE_BOOTCAMP_ERROR,
+  DELETE_COURSE_ERROR,
+  ADD_COURSE_ERROR,
+  UPDATE_COURSE_ERROR,
+  CLEAR_ERRORS
 } from '../actions';
 
 const initialState = {
@@ -22,7 +34,8 @@ const initialState = {
   singleBootcampLoading: false,
   singleBootcampError: false,
   singleBootcamp: {},
-  courses: []
+  courses: [],
+  error: null
 };
 
 const BootcampsContext = React.createContext();
@@ -110,6 +123,182 @@ export const BootcampsProvider = ({ children }) => {
     }
   };
 
+  const submitBootcampPhoto = async (bootcampId, data) => {
+    dispatch({ type: GET_BOOTCAMPS_BEGIN });
+
+    try {
+      // PUT bootcamps/5d725a1b7b292f5f8ceff788/photo
+      const response = await axios.put(
+        `${baseAPIUrl}/bootcamps/${bootcampId}/photo`,
+        data,
+        {}
+      );
+
+      dispatch({
+        type: SUBMIT_BOOTCAMP_PHOTO_SUCCESS,
+        payload: { photo: response.data.data, id: bootcampId }
+      });
+    } catch (error) {
+      // console.log(error.response.data);
+      if (error.response.data.error) {
+        dispatch({
+          type: SUBMIT_BOOTCAMP_PHOTO_ERROR,
+          payload: error.response.data.error
+        });
+      } else {
+        dispatch({
+          type: SUBMIT_BOOTCAMP_PHOTO_ERROR,
+          payload: 'An error occured uploading photo'
+        });
+      }
+    }
+  };
+
+  const deleteBootcamp = async id => {
+    dispatch({ type: GET_BOOTCAMPS_BEGIN });
+
+    try {
+      await axios.delete(`${baseAPIUrl}/bootcamps/${id}`);
+      dispatch({ type: DELETE_BOOTCAMP_SUCCESS, payload: id });
+    } catch (error) {
+      // console.log(error.response.data);
+      if (error.response.data.error) {
+        dispatch({
+          type: DELETE_BOOTCAMP_ERROR,
+          payload: error.response.data.error
+        });
+      } else {
+        dispatch({
+          type: DELETE_BOOTCAMP_ERROR,
+          payload: 'An error occured deleting bootcamp'
+        });
+      }
+    }
+  };
+
+  const addBootcamp = async bootcamp => {
+    dispatch({ type: GET_BOOTCAMPS_BEGIN });
+
+    try {
+      const newBootcamp = await axios.post(`${baseAPIUrl}/bootcamps`, bootcamp);
+      dispatch({ type: ADD_BOOTCAMP_SUCCESS, payload: newBootcamp.data.data });
+    } catch (error) {
+      // console.log(error.response.data);
+      if (error.response.data.error) {
+        dispatch({
+          type: ADD_BOOTCAMP_ERROR,
+          payload: error.response.data.error
+        });
+      } else {
+        dispatch({
+          type: ADD_BOOTCAMP_ERROR,
+          payload: 'An error occured creating bootcamp'
+        });
+      }
+    }
+  };
+
+  const updateBootcamp = async (id, bootcamp) => {
+    dispatch({ type: GET_BOOTCAMPS_BEGIN });
+
+    try {
+      const updatedBootcamp = await axios.put(
+        `${baseAPIUrl}/bootcamps/${id}`,
+        bootcamp
+      );
+      dispatch({
+        type: UPDATE_BOOTCAMP_SUCCESS,
+        payload: updatedBootcamp.data.data
+      });
+    } catch (error) {
+      // console.log(error.response.data);
+      if (error.response.data.error) {
+        dispatch({
+          type: UPDATE_BOOTCAMP_ERROR,
+          payload: error.response.data.error
+        });
+      } else {
+        dispatch({
+          type: ADD_BOOTCAMP_ERROR,
+          payload: 'An error occured creating bootcamp'
+        });
+      }
+    }
+  };
+
+  const addCourse = async (bootcampId, course) => {
+    dispatch({ type: GET_BOOTCAMPS_BEGIN });
+
+    try {
+      await axios.post(`${baseAPIUrl}/bootcamps/${bootcampId}/courses`, course);
+      await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.error) {
+        dispatch({
+          type: ADD_COURSE_ERROR,
+          payload: error.response.data.error
+        });
+      } else {
+        dispatch({
+          type: ADD_COURSE_ERROR,
+          payload: 'An error occured deleting course'
+        });
+      }
+    }
+  };
+
+  const updateCourse = async (courseId, course) => {
+    dispatch({ type: GET_BOOTCAMPS_BEGIN });
+
+    try {
+      await axios.put(`${baseAPIUrl}/courses/${courseId}`, course);
+      await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.error) {
+        dispatch({
+          type: UPDATE_COURSE_ERROR,
+          payload: error.response.data.error
+        });
+      } else {
+        dispatch({
+          type: UPDATE_COURSE_ERROR,
+          payload: 'An error occured deleting course'
+        });
+      }
+    }
+  };
+
+  const deleteCourse = async courseId => {
+    dispatch({ type: GET_BOOTCAMPS_BEGIN });
+
+    try {
+      await axios.delete(`${baseAPIUrl}/courses/${courseId}`);
+      await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
+      // dispatch({
+      //   type: DELETE_COURSE_SUCCESS,
+      //   payload: { bootcampId, courseId }
+      // });
+    } catch (error) {
+      // console.log(error.response.data);
+      if (error.response.data.error) {
+        dispatch({
+          type: DELETE_COURSE_ERROR,
+          payload: error.response.data.error
+        });
+      } else {
+        dispatch({
+          type: DELETE_COURSE_ERROR,
+          payload: 'An error occured deleting course'
+        });
+      }
+    }
+  };
+
+  // Clear Errors
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
   useEffect(() => {
     fetchBootcamps(`${baseAPIUrl}/bootcamps`);
   }, []);
@@ -123,7 +312,15 @@ export const BootcampsProvider = ({ children }) => {
         fetchBootcamps,
         fetchSingleBootcamp,
         fetchBootcampsWithinRadius,
-        fetchBootcampsWithFilter
+        fetchBootcampsWithFilter,
+        submitBootcampPhoto,
+        deleteBootcamp,
+        addBootcamp,
+        updateBootcamp,
+        addCourse,
+        updateCourse,
+        deleteCourse,
+        clearErrors
       }}
     >
       {children}

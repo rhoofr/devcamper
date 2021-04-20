@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaChevronLeft } from 'react-icons/fa';
-import { ToastContainer } from 'react-toastify';
 import { notifyError } from '../utils/toastNotify';
 import { baseAPIUrl } from '../utils/constants';
 
@@ -80,17 +79,6 @@ const CreateReview = props => {
 
   return (
     <section className='container mt-5'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className='row'>
         <div className='col-md-8 m-auto'>
           <div className='card bg-white py-2 px-4'>

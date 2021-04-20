@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 // import AlertContext from '../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
-import { ToastContainer } from 'react-toastify';
 import { notifyError } from '../utils/toastNotify';
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -50,17 +49,6 @@ const Login = props => {
   return (
     <section className='form mt-5'>
       <div className='container'>
-        <ToastContainer
-          position='top-right'
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className='row'>
           <div className='col-md-6 m-auto'>
             <div className='card bg-white p-4 mb-4'>

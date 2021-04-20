@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import Loading from '../components/Loading';
@@ -62,17 +61,6 @@ const ManageReviewsPage = () => {
 
   return (
     <section className='container mt-5'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div
         className='modal fade'
         id='reviewModal'

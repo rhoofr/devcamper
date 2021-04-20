@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import { baseAPIUrl } from '../utils/constants';
 
-const ManageAccountPage = () => {
+const ManageAccountPage = props => {
   const { user, updateUser } = useAuthContext();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -27,6 +26,7 @@ const ManageAccountPage = () => {
       updateUser(name, email);
 
       notifySuccess('✅ Account was updated');
+      props.history.push('/');
     } catch (e) {
       if (e.response.data.error) {
         console.log(e.response.data.error);
@@ -39,17 +39,6 @@ const ManageAccountPage = () => {
 
   return (
     <section className='container mt-5'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className='row'>
         <div className='col-md-8 m-auto'>
           <div className='card bg-white py-2 px-4'>

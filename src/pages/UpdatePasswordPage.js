@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { baseAPIUrl } from '../utils/constants';
 
-const UpdatePasswordPage = () => {
+const UpdatePasswordPage = props => {
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPassword2, setNewPassword2] = useState('');
@@ -25,6 +24,7 @@ const UpdatePasswordPage = () => {
         });
 
         notifySuccess('✅ Password was updated');
+        props.history.push('/');
       } catch (e) {
         if (e.response.data.error) {
           console.log(e.response.data.error);
@@ -38,17 +38,6 @@ const UpdatePasswordPage = () => {
 
   return (
     <section className='container mt-5'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className='row'>
         <div className='col-md-8 m-auto'>
           <div className='card bg-white py-2 px-4'>

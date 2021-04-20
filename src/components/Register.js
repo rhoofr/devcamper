@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import AlertContext from '../context/alert/alertContext';
 import { useAuthContext } from '../context/authContext';
-import { ToastContainer } from 'react-toastify';
 import { notifyError } from '../utils/toastNotify';
 
 const Register = props => {
@@ -56,17 +55,6 @@ const Register = props => {
 
   return (
     <section className='form mt-5'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className='container'>
         <div className='row'>
           <div className='col-md-6 m-auto'>

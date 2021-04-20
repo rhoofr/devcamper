@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
 import { useBootcampsContext } from '../context/bootcampsContext';
 import { notifyError } from '../utils/toastNotify';
 // import Error from './Error';
@@ -56,17 +55,6 @@ const BootCamps = () => {
 
   return (
     <div className='container'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className='title my-4'>
         <h2>bootcamps</h2>
         <div className='underline'></div>

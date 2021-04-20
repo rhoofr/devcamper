@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import MultiSelect from 'react-multi-select-component';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import { useBootcampsContext } from '../context/bootcampsContext';
-import { baseAPIUrl } from '../utils/constants';
 import Loading from '../components/Loading';
 
 const AddEditBootcampPage = props => {
   const { user } = useAuthContext();
-  const { fetchBootcamps } = useBootcampsContext();
-  const { editMode, bootcampToEdit } = props.location.state;
+  const {
+    bootcampsLoading,
+    addBootcamp,
+    updateBootcamp,
+    clearErrors,
+    error
+  } = useBootcampsContext();
+  let editMode;
+  let bootcampToEdit;
+  if (props.location.state) {
+    editMode = props.location.state.editMode;
+    bootcampToEdit = props.location.state.bootcampToEdit;
+  }
+
   const initialState = {
     name: '',
     address: '',
@@ -25,29 +35,41 @@ const AddEditBootcampPage = props => {
     acceptGi: false
   };
 
-  const [loading, setLoading] = useState(false);
-  const [selectedCareerOptions, setSelectedCareerOptions] = useState(
-    editMode ? bootcampToEdit.careers : []
-  );
+  const careerOptions = [
+    { label: 'Web Development', value: 'Web Development' },
+    { label: 'Mobile Development', value: 'Mobile Development' },
+    { label: 'UI/UX', value: 'UI/UX' },
+    { label: 'Data Science', value: 'Data Science' },
+    { label: 'Business', value: 'Business' },
+    { label: 'Other', value: 'Other' }
+  ];
+
   if (editMode) {
-    // setLoading(true);
     bootcampToEdit.address = `${bootcampToEdit.location.street}, ${bootcampToEdit.location.city}, ${bootcampToEdit.location.state}, ${bootcampToEdit.location.zipcode}`;
-    // setSelectedCareerOptions(bootcampToEdit.careers);
-    // console.log(bootcampToEdit.careers);
-    // setLoading(false);
   }
+  const [selectedCareerOptions, setSelectedCareerOptions] = useState(
+    editMode ? transformSelectedCareerOptions(bootcampToEdit.careers) : []
+  );
   const [bootcamp, setBootcamp] = useState(
     editMode ? bootcampToEdit : initialState
   );
 
-  // if (editMode) {
-  //   setLoading(true);
-  //   setBootcamp({
-  //     ...bootcamp,
-  //     address: `${bootcampToEdit.location.street}, ${bootcampToEdit.location.city}, ${bootcampToEdit.location.state}, ${bootcampToEdit.location.zipcode}`
-  //   });
-  //   setLoading(false);
-  // }
+  function transformSelectedCareerOptions(options) {
+    const retArr = [];
+    for (let i = 0; i < options.length; i++) {
+      const option = { label: options[i], value: options[i] };
+      retArr.push(option);
+    }
+    return retArr;
+  }
+
+  function transformSelectedCareerOptionsForSave() {
+    const retArr = [];
+    for (let i = 0; i < selectedCareerOptions.length; i++) {
+      retArr.push(selectedCareerOptions[i].value);
+    }
+    return retArr;
+  }
 
   const {
     name,
@@ -64,18 +86,6 @@ const AddEditBootcampPage = props => {
 
   const onChange = e => {
     setBootcamp({ ...bootcamp, [e.target.name]: e.target.value });
-  };
-
-  const handleSelectChange = e => {
-    console.log('in handleSelectChange');
-    const options = e.target.options;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i++) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    setSelectedCareerOptions(value);
   };
 
   const validateFields = () => {
@@ -95,74 +105,61 @@ const AddEditBootcampPage = props => {
     if (!validateFields()) {
       return notifyError('❌ Please enter all required fields');
     }
-    try {
-      if (editMode) {
-        await axios.put(`${baseAPIUrl}/bootcamps/${bootcamp._id}`, {
-          name: name,
-          address: address,
-          phone: phone,
-          email: email,
-          website: website,
-          description: description,
-          housing: housing,
-          jobAssistance: jobAssistance,
-          jobGuarantee: jobGuarantee,
-          acceptGi: acceptGi,
-          user: user._id,
-          careers: selectedCareerOptions
-        });
-      } else {
-        await axios.post(`${baseAPIUrl}/bootcamps`, {
-          name: name,
-          address: address,
-          phone: phone,
-          email: email,
-          website: website,
-          description: description,
-          housing: housing,
-          jobAssistance: jobAssistance,
-          jobGuarantee: jobGuarantee,
-          acceptGi: acceptGi,
-          user: user._id,
-          careers: selectedCareerOptions
-        });
-      }
 
-      await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
-      props.history.push('/managebootcamps');
-    } catch (e) {
-      console.log(e);
-      // console.log(e.response.data.error);
-      if (e.response.data.error === 'Duplicate field value entered') {
-        notifyError(`❕ Review already entered for this Bootcamp`);
-      } else if (
-        e.response.data.error ===
-        'User role publisher is not authorized to access this route'
-      ) {
-        notifyError(`❕ User with publisher role cannot write reviews`);
+    if (editMode) {
+      await updateBootcamp(bootcamp._id, {
+        name: bootcamp.name,
+        address: bootcamp.address,
+        phone: bootcamp.phone,
+        email: bootcamp.email,
+        website: bootcamp.website,
+        description: bootcamp.description,
+        housing: bootcamp.housing,
+        jobAssistance: bootcamp.jobAssistance,
+        jobGuarantee: bootcamp.jobGuarantee,
+        acceptGi: bootcamp.acceptGi,
+        user: user._id,
+        careers: transformSelectedCareerOptionsForSave()
+      });
+      if (error) {
+        notifyError(`👎 ${error}`);
+        clearErrors();
       } else {
-        notifyError(`❕ ${e.response.data.error}`);
+        notifySuccess('✅ Bootcamp updated');
+        return props.history.push('/managebootcamps');
+      }
+    } else {
+      await addBootcamp({
+        name: bootcamp.name,
+        address: bootcamp.address,
+        phone: bootcamp.phone,
+        email: bootcamp.email,
+        website: bootcamp.website,
+        description: bootcamp.description,
+        housing: bootcamp.housing,
+        jobAssistance: bootcamp.jobAssistance,
+        jobGuarantee: bootcamp.jobGuarantee,
+        acceptGi: bootcamp.acceptGi,
+        user: user._id,
+        careers: transformSelectedCareerOptionsForSave()
+      });
+
+      if (error) {
+        notifyError(`👎 ${error}`);
+        clearErrors();
+      } else {
+        notifySuccess('✅ Bootcamp added');
+        return props.history.push('/managebootcamps');
       }
     }
   };
 
-  if (loading) {
+  if (bootcampsLoading) {
     return <Loading />;
   }
 
   return (
     <section className='container mt-3'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <h1 className='mb-2'>{editMode ? 'Edit' : 'Add'} Bootcamp</h1>
       <p>
         Important: You must be affiliated with a bootcamp to add to DevCamper
@@ -191,7 +188,7 @@ const AddEditBootcampPage = props => {
                     className='form-control'
                     placeholder='Bootcamp Name'
                     required
-                    autoFocus
+                    autoFocus={!editMode}
                   />
                 </div>
                 <div className='form-group'>
@@ -282,25 +279,15 @@ const AddEditBootcampPage = props => {
                       <span className='text-danger'>(Required)</span>
                     </small>
                   </label>
-                  <select
-                    name='careers'
+                  <MultiSelect
+                    options={careerOptions}
                     id='selectCareers'
-                    className='form-select'
-                    multiple
-                    onChange={handleSelectChange}
-                  >
-                    <option disabled>
-                      Select all that apply (at least one)
-                    </option>
-                    <option value='Web Development'>Web Development</option>
-                    <option value='Mobile Development'>
-                      Mobile Development
-                    </option>
-                    <option value='UI/UX'>UI/UX</option>
-                    <option value='Data Science'>Data Science</option>
-                    <option value='Business'>Business</option>
-                    <option value='Other'>Other</option>
-                  </select>
+                    // className='form-select'
+                    disableSearch
+                    value={selectedCareerOptions}
+                    onChange={setSelectedCareerOptions}
+                    labelledBy={'Select all that apply (at least one)'}
+                  />
                 </div>
                 <div className='form-check'>
                   <input

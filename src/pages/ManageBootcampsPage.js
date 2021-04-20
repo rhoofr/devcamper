@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import { useBootcampsContext } from '../context/bootcampsContext';
-import { baseAPIUrl, baseUrl } from '../utils/constants';
+import { baseUrl } from '../utils/constants';
 import Loading from '../components/Loading';
 
 const ManageBootcampsPage = props => {
   const { user } = useAuthContext();
-  const { bootcamps, fetchBootcamps } = useBootcampsContext();
+  const {
+    bootcamps,
+    submitBootcampPhoto,
+    deleteBootcamp,
+    bootcampsLoading,
+    clearErrors,
+    error
+  } = useBootcampsContext();
   const [bootcamp, setBootcamp] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [disableButtons, setDisableButtons] = useState(false);
-  const [imagePath, setImagePath] = useState('');
 
   useEffect(() => {
     const bootcamp = bootcamps.filter(bootcamp => {
@@ -24,9 +27,9 @@ const ManageBootcampsPage = props => {
 
     if (bootcamp.length > 0) {
       setBootcamp(bootcamp);
-      setImagePath(`${baseUrl}/uploads/${bootcamp[0].photo}`);
+    } else {
+      setBootcamp([]);
     }
-    setLoading(false);
   }, [bootcamps, user._id]);
 
   const handleSubmitPhoto = async e => {
@@ -36,31 +39,22 @@ const ManageBootcampsPage = props => {
     }
 
     setDisableButtons(true);
-    setImagePath('');
 
     const data = new FormData();
     data.append('file', selectedFile);
 
-    try {
-      // bootcamps/5d725a1b7b292f5f8ceff788/photo
-      await axios.put(
-        `${baseAPIUrl}/bootcamps/${bootcamp[0]._id}/photo`,
-        data,
-        {}
-      );
-      await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
+    await submitBootcampPhoto(bootcamp[0]._id, data);
+
+    if (error) {
+      notifyError(`👎 ${error}`);
+      clearErrors();
+    } else {
       notifySuccess('✅ Image uploaded');
-    } catch (error) {
-      if (error.response) {
-        notifyError(`❌ ${error.response.data.error}`);
-        console.log(error.response.data.error);
-      }
     }
     setSelectedFile(null);
     // reset input
     e.target.reset();
     setDisableButtons(false);
-    setImagePath(`${baseUrl}/uploads/${bootcamp[0].photo}`);
   };
 
   const getCareers = careers => {
@@ -72,22 +66,20 @@ const ManageBootcampsPage = props => {
   };
 
   const handleRemoveBootcamp = async e => {
-    setLoading(true);
     e.preventDefault();
 
-    try {
-      await axios.delete(`${baseAPIUrl}/bootcamps/${bootcamp[0]._id}`);
+    await deleteBootcamp(bootcamp[0]._id);
 
-      await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
-      props.history.push('/');
-    } catch (e) {
-      console.log(e.response.data.error);
-      notifyError('❌ An error occurred deleting bootcamp');
-      setLoading(false);
+    if (error) {
+      notifyError(`👎 ${error}`);
+      clearErrors();
+    } else {
+      notifySuccess('✅ Bootcamp deleted');
+      // props.history.push('/');
     }
   };
 
-  if (loading) {
+  if (bootcampsLoading) {
     return <Loading />;
   }
 
@@ -125,17 +117,6 @@ const ManageBootcampsPage = props => {
 
   return (
     <section className='container mt-5'>
-      <ToastContainer
-        position='top-right'
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div
         className='modal fade'
         id='reviewModal'
@@ -187,21 +168,26 @@ const ManageBootcampsPage = props => {
               <div className='card mb-3'>
                 <div className='row no-gutters'>
                   <div className='col-md-4'>
-                    {bootcamp[0].photo === 'no-photo.jpg' ? (
+                    {bootcamp.length < 1 ||
+                    bootcamp[0].photo === 'no-photo.jpg' ? (
                       <h3 className='mt-4'>No Image</h3>
                     ) : (
-                      <img src={imagePath} className='card-img' alt='camp' />
+                      <img
+                        src={`${baseUrl}/uploads/${bootcamp[0].photo}`}
+                        className='card-img'
+                        alt='camp'
+                      />
                     )}
                   </div>
                   <div className='col-md-8'>
                     <div className='card-body'>
                       <h5 className='card-title'>
-                        <a href='bootcamp.html'>
+                        <Link to={`/bootcamps/${bootcamp[0]._id}`}>
                           {bootcamp[0] && bootcamp[0].name}
                           <span className='float-end badge bg-success'>
                             {bootcamp[0].averageRating}
                           </span>
-                        </a>
+                        </Link>
                       </h5>
                       <span className='badge bg-dark mb-2'>
                         {bootcamp[0].location && bootcamp[0].location.city},{' '}
@@ -248,13 +234,13 @@ const ManageBootcampsPage = props => {
                 Edit Bootcamp Details
               </Link>
 
-              <a
-                href='manage-courses.html'
+              <Link
+                to='/managecourses'
                 className='btn btn-secondary btn-block w-100 mb-2'
                 disabled={disableButtons}
               >
                 Manage Courses
-              </a>
+              </Link>
               <button
                 data-bs-toggle='modal'
                 data-bs-target='#reviewModal'
