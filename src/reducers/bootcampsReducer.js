@@ -144,13 +144,14 @@ const bootcampReducer = (state, action) => {
     case ADD_COURSE_ERROR:
       return {
         ...state,
-        bootcampsLoading: false,
-        error: action.payload
+        error: action.payload,
+        bootcampsLoading: false
       };
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null
+        error: null,
+        bootcampsError: false
       };
     default:
       return state;

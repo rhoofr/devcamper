@@ -4,7 +4,8 @@ import { FaCheck, FaTimes, FaPencilAlt, FaComments } from 'react-icons/fa';
 import Loading from './Loading';
 import Course from './Course';
 import { useBootcampsContext } from '../context/bootcampsContext';
-import { baseUrl } from '../utils/constants';
+// import { baseUrl } from '../utils/constants';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const SingleBootcamp = () => {
   const { id } = useParams();

@@ -63,7 +63,6 @@ const AddEditCoursePage = props => {
       return notifyError('❌ Please enter all required fields');
     }
     if (editMode) {
-      // TODO: change to edit logic
       await updateCourse(course._id, {
         title,
         description,
@@ -227,7 +226,7 @@ const AddEditCoursePage = props => {
                 <div className='form-group mt-4'>
                   <input
                     type='submit'
-                    value={editMode ? 'Edit Course' : 'Add Course'}
+                    value={editMode ? 'Save' : 'Add Course'}
                     className='btn btn-primary btn-block my-4 w-100'
                   />
                 </div>

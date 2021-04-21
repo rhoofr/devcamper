@@ -4,9 +4,11 @@ import { FaChevronLeft } from 'react-icons/fa';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import { useBootcampsContext } from '../context/bootcampsContext';
-import { baseUrl } from '../utils/constants';
+// import { baseUrl } from '../utils/constants';
 import CourseItem from '../components/CourseItem';
 import Loading from '../components/Loading';
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const ManageCoursesPage = props => {
   const { user } = useAuthContext();

@@ -9,10 +9,10 @@ import {
 import { IconContext } from 'react-icons';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
+import { useBootcampsContext } from '../context/bootcampsContext';
 
 const Nav = () => {
-  // const { openSidebar } = useProductsContext();
-  // const { myUser } = useUserContext();
+  const { openSidebar } = useBootcampsContext();
   const { user, isAuthenticated, logout, loadUser } = useAuthContext();
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const Nav = () => {
   );
 
   return (
-    <nav className='navbar navbar-expand-md navbar-dark bg-primary'>
+    <nav className='navbar navbar-expand-sm navbar-dark bg-primary'>
       <div className='container'>
         <IconContext.Provider value={{ className: 'react-icons' }}>
           <FaLaptopCode />
@@ -87,6 +87,7 @@ const Nav = () => {
           className='navbar-toggler'
           type='button'
           data-toggle='collapse'
+          onClick={openSidebar}
           data-target='#navbarSupportedContent'
         >
           <span className='navbar-toggler-icon'></span>

@@ -1,5 +1,6 @@
 import BootCamps from './BootCamps';
 import Navbar from './Navbar';
+import Sidebar from './Sidebar';
 import Loading from './Loading';
 import SingleBootcamp from './SingleBootcamp';
 import Register from './Register';
@@ -15,6 +16,7 @@ import ReviewItem from './ReviewItem';
 export {
   BootCamps,
   Navbar,
+  Sidebar,
   Loading,
   SingleBootcamp,
   Register,

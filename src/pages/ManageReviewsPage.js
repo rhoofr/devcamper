@@ -118,7 +118,7 @@ const ManageReviewsPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {reviews &&
+                  {reviews.length > 0 &&
                     reviews.map(review => {
                       return (
                         <ReviewItem

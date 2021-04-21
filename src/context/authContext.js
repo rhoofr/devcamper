@@ -14,7 +14,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-  USER_UPDATED
+  USER_UPDATED,
+  SET_AUTH_LINKS
 } from '../actions';
 
 const initialState = {
@@ -22,7 +23,8 @@ const initialState = {
   isAuthenticated: null,
   loading: false,
   user: null,
-  error: null
+  error: null,
+  authLinks: []
 };
 
 const AuthContext = React.createContext();
@@ -120,6 +122,11 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: LOGOUT });
   };
 
+  // Set Auth Links
+  const setAuthLinks = () => {
+    dispatch({ type: SET_AUTH_LINKS });
+  };
+
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
@@ -136,7 +143,8 @@ export const AuthProvider = ({ children }) => {
         logout,
         clearErrors,
         loadUser,
-        updateUser
+        updateUser,
+        setAuthLinks
       }}
     >
       {children}

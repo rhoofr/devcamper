@@ -72,14 +72,14 @@ const ManageAccountPage = props => {
                 </div>
                 <div className='form-group'>
                   <div className='row'>
-                    <div className='col-md-6'>
+                    <div className='col-sm-6 mb-2 mb-sm-0'>
                       <input
                         type='submit'
                         value='Save'
                         className='btn btn-success btn-block w-100'
                       />
                     </div>
-                    <div className='col-md-6'>
+                    <div className='col-sm-6'>
                       <Link
                         to='/updatepassword'
                         className='btn btn-secondary btn-block w-100'

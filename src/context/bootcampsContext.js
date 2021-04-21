@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import reducer from '../reducers/bootcampsReducer';
-import { baseAPIUrl } from '../utils/constants';
+// import { baseAPIUrl } from '../utils/constants';
+
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -25,6 +26,8 @@ import {
   UPDATE_COURSE_ERROR,
   CLEAR_ERRORS
 } from '../actions';
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const initialState = {
   isSidebarOpen: false,
@@ -72,7 +75,7 @@ export const BootcampsProvider = ({ children }) => {
   };
 
   const fetchBootcampsWithinRadius = async (zipcode, miles) => {
-    fetchBootcamps(`${baseAPIUrl}/bootcamps/radius/${zipcode}/${miles}`);
+    await fetchBootcamps(`${baseAPIUrl}/bootcamps/radius/${zipcode}/${miles}`);
   };
 
   const fetchBootcampsWithFilter = async (rating, cost) => {
@@ -139,8 +142,8 @@ export const BootcampsProvider = ({ children }) => {
         payload: { photo: response.data.data, id: bootcampId }
       });
     } catch (error) {
-      // console.log(error.response.data);
-      if (error.response.data.error) {
+      console.log(error.response.data);
+      if (error.response.data && error.response.data.error) {
         dispatch({
           type: SUBMIT_BOOTCAMP_PHOTO_ERROR,
           payload: error.response.data.error
@@ -162,7 +165,7 @@ export const BootcampsProvider = ({ children }) => {
       dispatch({ type: DELETE_BOOTCAMP_SUCCESS, payload: id });
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data.error) {
+      if (error.response.data && error.response.data.error) {
         dispatch({
           type: DELETE_BOOTCAMP_ERROR,
           payload: error.response.data.error
@@ -184,7 +187,7 @@ export const BootcampsProvider = ({ children }) => {
       dispatch({ type: ADD_BOOTCAMP_SUCCESS, payload: newBootcamp.data.data });
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data.error) {
+      if (error.response.data && error.response.data.error) {
         dispatch({
           type: ADD_BOOTCAMP_ERROR,
           payload: error.response.data.error
@@ -212,7 +215,7 @@ export const BootcampsProvider = ({ children }) => {
       });
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data.error) {
+      if (error.response.data && error.response.data.error) {
         dispatch({
           type: UPDATE_BOOTCAMP_ERROR,
           payload: error.response.data.error
@@ -234,7 +237,7 @@ export const BootcampsProvider = ({ children }) => {
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
     } catch (error) {
       console.log(error);
-      if (error.response.data.error) {
+      if (error.response.data && error.response.data.error) {
         dispatch({
           type: ADD_COURSE_ERROR,
           payload: error.response.data.error
@@ -256,7 +259,7 @@ export const BootcampsProvider = ({ children }) => {
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
     } catch (error) {
       console.log(error);
-      if (error.response.data.error) {
+      if (error.response.data && error.response.data.error) {
         dispatch({
           type: UPDATE_COURSE_ERROR,
           payload: error.response.data.error
@@ -282,7 +285,7 @@ export const BootcampsProvider = ({ children }) => {
       // });
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data.error) {
+      if (error.response.data && error.response.data.error) {
         dispatch({
           type: DELETE_COURSE_ERROR,
           payload: error.response.data.error
