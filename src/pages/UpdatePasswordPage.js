@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
-import { baseAPIUrl } from '../utils/constants';
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const UpdatePasswordPage = props => {
   const [password, setPassword] = useState('');
@@ -27,7 +28,7 @@ const UpdatePasswordPage = props => {
         props.history.push('/');
       } catch (e) {
         if (e.response.data.error) {
-          console.log(e.response.data.error);
+          // console.log(e.response.data.error);
           return notifyError(`❌ ${e.response.data.error}`);
         }
 

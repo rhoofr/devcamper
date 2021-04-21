@@ -32,6 +32,4 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const SET_AUTH_LINKS = 'SET_AUTH_LINKS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
-export const SET_ALERT = 'SET_ALERT';
-export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const USER_UPDATED = 'USER_UPDATED';

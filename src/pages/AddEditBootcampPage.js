@@ -282,7 +282,6 @@ const AddEditBootcampPage = props => {
                   <MultiSelect
                     options={careerOptions}
                     id='selectCareers'
-                    // className='form-select'
                     disableSearch
                     value={selectedCareerOptions}
                     onChange={setSelectedCareerOptions}

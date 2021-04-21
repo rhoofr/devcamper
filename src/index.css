@@ -170,25 +170,6 @@ p {
   animation: spinner 0.6s linear infinite;
 }
 
-/* .btn {
-  text-transform: uppercase;
-  background: var(--clr-primary-5);
-  color: var(--clr-primary-10);
-  padding: 0.375rem 0.75rem;
-  letter-spacing: var(--spacing);
-  display: inline-block;
-  font-weight: 400;
-  transition: var(--transition);
-  font-size: 0.875rem;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  border-radius: var(--radius);
-  border-color: transparent;
-}
-.btn:hover {
-  color: var(--clr-primary-1);
-  background: var(--clr-primary-7);
-} */
 .title {
   text-align: center;
 }
@@ -198,29 +179,6 @@ p {
   background: #49a6e9;
   margin-left: auto;
   margin-right: auto;
-}
-.page-100 {
-  min-height: calc(100vh - 10rem);
-  padding: 5rem 0;
-}
-.page {
-  min-height: calc(100vh - (20vh + 10rem));
-}
-
-.bootcamps-container {
-  display: grid;
-  gap: 2rem 1.5rem;
-}
-
-@media (min-width: 992px) {
-  .bootcamps-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 1170px) {
-  .bootcamps-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 .react-icons {

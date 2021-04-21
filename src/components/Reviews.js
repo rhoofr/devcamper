@@ -4,7 +4,8 @@ import { useParams, Link } from 'react-router-dom';
 import { FaChevronLeft, FaPencilAlt } from 'react-icons/fa';
 import Loading from './Loading';
 import Review from './Review';
-import { baseAPIUrl } from '../utils/constants';
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const Reviews = ({ location }) => {
   const { name, averageRating } = location.state;

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useReducer } from 'react';
 import reducer from '../reducers/authReducer';
-import { baseAPIUrl } from '../utils/constants';
 import setAuthToken from '../utils/setAuthToken';
 import {
   REGISTER_START,
@@ -14,8 +13,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-  USER_UPDATED,
-  SET_AUTH_LINKS
+  USER_UPDATED
 } from '../actions';
 
 const initialState = {
@@ -26,6 +24,8 @@ const initialState = {
   error: null,
   authLinks: []
 };
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const AuthContext = React.createContext();
 
@@ -109,7 +109,6 @@ export const AuthProvider = ({ children }) => {
       });
       setAuthToken(res.data.token);
     } catch (err) {
-      // console.log(err.response);
       dispatch({ type: LOGIN_FAIL, payload: err.response.data.error });
     }
   };
@@ -122,17 +121,8 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: LOGOUT });
   };
 
-  // Set Auth Links
-  const setAuthLinks = () => {
-    dispatch({ type: SET_AUTH_LINKS });
-  };
-
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
-
-  // useEffect(() => {
-  //   fetchBootcamps(`${baseAPIUrl}/bootcamps`);
-  // }, []);
 
   return (
     <AuthContext.Provider
@@ -143,8 +133,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         clearErrors,
         loadUser,
-        updateUser,
-        setAuthLinks
+        updateUser
       }}
     >
       {children}

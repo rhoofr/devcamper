@@ -4,7 +4,8 @@ import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import Loading from '../components/Loading';
 import ReviewItem from '../components/ReviewItem';
-import { baseAPIUrl } from '../utils/constants';
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const ManageReviewsPage = () => {
   const { user } = useAuthContext();
@@ -22,7 +23,7 @@ const ManageReviewsPage = () => {
 
       notifySuccess('✅ Review was deleted');
     } catch (e) {
-      console.log(e.response.data.error);
+      // console.log(e.response.data.error);
       notifyError('❌ An error occurred deleting review');
     }
   };

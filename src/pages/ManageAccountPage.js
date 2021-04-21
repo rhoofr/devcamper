@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
-import { baseAPIUrl } from '../utils/constants';
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const ManageAccountPage = props => {
   const { user, updateUser } = useAuthContext();
@@ -29,7 +30,7 @@ const ManageAccountPage = props => {
       props.history.push('/');
     } catch (e) {
       if (e.response.data.error) {
-        console.log(e.response.data.error);
+        // console.log(e.response.data.error);
         return notifyError(`❌ ${e.response.data.error}`);
       }
 

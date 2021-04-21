@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { baseUrl } from '../utils/constants';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const Bootcamp = ({

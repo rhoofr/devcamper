@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
-// import { useAuthContext } from '../context/authContext';
 import { useBootcampsContext } from '../context/bootcampsContext';
 import Loading from '../components/Loading';
 
 const AddEditCoursePage = props => {
-  // const { user } = useAuthContext();
   const {
     bootcampsLoading,
     addCourse,
@@ -179,7 +177,6 @@ const AddEditCoursePage = props => {
                     className='form-select'
                     aria-label='Default select example'
                     onChange={onChange}
-                    // defaultValue='beginner'
                   >
                     <option value='beginner'>Beginner (Any)</option>
                     <option value='intermediate'>Intermediate</option>

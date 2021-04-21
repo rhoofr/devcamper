@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaChevronLeft } from 'react-icons/fa';
 import { notifyError } from '../utils/toastNotify';
-import { baseAPIUrl } from '../utils/constants';
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const CreateReview = props => {
   const { id } = useParams();
@@ -60,9 +61,7 @@ const CreateReview = props => {
           averageRating: response.data.bootcamp.averageRating
         }
       });
-      // console.log('New post was created.');
     } catch (e) {
-      console.log(e);
       // console.log(e.response.data.error);
       if (e.response.data.error === 'Duplicate field value entered') {
         notifyError(`❕ Review already entered for this Bootcamp`);

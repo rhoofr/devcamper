@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useBootcampsContext } from '../context/bootcampsContext';
 import { notifyError } from '../utils/toastNotify';
-// import Error from './Error';
 import Loading from './Loading';
-import { baseAPIUrl } from '../utils/constants';
 import Bootcamp from './Bootcamp';
+
+const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const BootCamps = () => {
   const {

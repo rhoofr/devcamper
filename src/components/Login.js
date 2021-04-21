@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import AlertContext from '../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import { notifyError } from '../utils/toastNotify';
-// import 'react-toastify/dist/ReactToastify.css';
 
 const Login = props => {
   const { login, error, clearErrors, isAuthenticated } = useAuthContext();
-  // const alertContext = useContext(AlertContext);
 
-  // const { setAlert } = alertContext;
   const [user, setUser] = useState({
     email: '',
     password: ''
@@ -23,7 +19,6 @@ const Login = props => {
     }
 
     if (error) {
-      // setAlert(error, 'danger', 3000);
       notifyError(`👎 ${error}`);
       clearErrors();
     }
@@ -36,8 +31,6 @@ const Login = props => {
     e.preventDefault();
     if (email.trim() === '' || password.trim() === '') {
       notifyError(`❕ Please enter email and password`);
-      // notify('❕ Please enter email and passord');
-      // setAlert('Please enter all fields', 'danger', 3000);
     } else {
       login({
         email,

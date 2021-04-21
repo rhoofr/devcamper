@@ -16,11 +16,8 @@ import {
   ADD_BOOTCAMP_ERROR,
   UPDATE_BOOTCAMP_SUCCESS,
   UPDATE_BOOTCAMP_ERROR,
-  // DELETE_COURSE_SUCCESS,
   DELETE_COURSE_ERROR,
-  // ADD_COURSE_SUCCESS,
   ADD_COURSE_ERROR,
-  // UPDATE_COURSE_SUCCESS,
   UPDATE_COURSE_ERROR,
   CLEAR_ERRORS
 } from '../actions';
@@ -108,33 +105,6 @@ const bootcampReducer = (state, action) => {
           bootcamp._id === action.payload._id ? action.payload : bootcamp
         )
       };
-    // case ADD_COURSE_SUCCESS: ///////////////////////////////////////////
-    //   return {
-    //     ...state,
-    //     bootcampsLoading: false,
-    //     bootcamps: [...state.bootcamps, action.payload]
-    //   };
-    // case DELETE_COURSE_SUCCESS: ///////////////////////////////////////
-    //   state.bootcamps.forEach(bootcamp =>
-    //     bootcamp.courses.forEach((course, index) => {
-    //       if (
-    //         course._id === action.payload.courseId &&
-    //         bootcamp._id === action.payload.bootcampId
-    //       ) {
-    //         return bootcamp.courses.splice(index, 1);
-    //       }
-    //     })
-    //   );
-
-    //   return { ...state, bootcampsLoading: false };
-    // case UPDATE_COURSE_SUCCESS: ////////////////////////////////////////////
-    //   return {
-    //     ...state,
-    //     bootcampsLoading: false,
-    //     bootcamps: state.bootcamps.map(bootcamp =>
-    //       bootcamp._id === action.payload._id ? action.payload : bootcamp
-    //     )
-    //   };
     case SUBMIT_BOOTCAMP_PHOTO_ERROR:
     case DELETE_BOOTCAMP_ERROR:
     case UPDATE_BOOTCAMP_ERROR:

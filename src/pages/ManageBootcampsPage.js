@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import { useBootcampsContext } from '../context/bootcampsContext';
-// import { baseUrl } from '../utils/constants';
 import Loading from '../components/Loading';
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -77,7 +76,6 @@ const ManageBootcampsPage = props => {
       clearErrors();
     } else {
       notifySuccess('✅ Bootcamp deleted');
-      // props.history.push('/');
     }
   };
 

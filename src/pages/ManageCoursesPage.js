@@ -4,7 +4,6 @@ import { FaChevronLeft } from 'react-icons/fa';
 import { notifyError, notifySuccess } from '../utils/toastNotify';
 import { useAuthContext } from '../context/authContext';
 import { useBootcampsContext } from '../context/bootcampsContext';
-// import { baseUrl } from '../utils/constants';
 import CourseItem from '../components/CourseItem';
 import Loading from '../components/Loading';
 
@@ -20,10 +19,6 @@ const ManageCoursesPage = props => {
     error
   } = useBootcampsContext();
   const [bootcamp, setBootcamp] = useState([]);
-  // const [courses, setCourses] = useState([]);
-  // const [updatedCount, setUpdatedCount] = useState(0);
-  // const [loading, setLoading] = useState(false);
-  // const [disableButtons, setDisableButtons] = useState(false);
   const [idToDelete, setIdToDelete] = useState('');
 
   const handleDelete = async e => {

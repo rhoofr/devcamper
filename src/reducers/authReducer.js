@@ -9,8 +9,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-  USER_UPDATED,
-  SET_AUTH_LINKS
+  USER_UPDATED
 } from '../actions';
 
 const authReducer = (state, action) => {
@@ -59,39 +58,6 @@ const authReducer = (state, action) => {
           name: action.payload.name,
           email: action.payload.email
         }
-      };
-    case SET_AUTH_LINKS:
-      const tempAuthLinks = [];
-      if (state.user && state.user.role !== 'user') {
-        tempAuthLinks.push({
-          id: 1,
-          text: 'Manage Bootcamp',
-          url: '/managebootcamps'
-        });
-      }
-
-      if (state.user && state.user.role !== 'publisher') {
-        tempAuthLinks.push({
-          id: 2,
-          text: 'Manage Reviews',
-          url: '/managereviews'
-        });
-      }
-
-      tempAuthLinks.push({
-        id: 3,
-        text: 'Manage Account',
-        url: '/manageaccount'
-      });
-
-      tempAuthLinks.push({
-        id: 4,
-        text: 'Logout',
-        url: '/'
-      });
-      return {
-        ...state,
-        authLinks: [...tempAuthLinks]
       };
     case CLEAR_ERRORS:
       return {

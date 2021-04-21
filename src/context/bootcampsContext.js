@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import reducer from '../reducers/bootcampsReducer';
-// import { baseAPIUrl } from '../utils/constants';
 
 import {
   SIDEBAR_OPEN,
@@ -142,7 +141,6 @@ export const BootcampsProvider = ({ children }) => {
         payload: { photo: response.data.data, id: bootcampId }
       });
     } catch (error) {
-      console.log(error.response.data);
       if (error.response.data && error.response.data.error) {
         dispatch({
           type: SUBMIT_BOOTCAMP_PHOTO_ERROR,
@@ -236,7 +234,6 @@ export const BootcampsProvider = ({ children }) => {
       await axios.post(`${baseAPIUrl}/bootcamps/${bootcampId}/courses`, course);
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
     } catch (error) {
-      console.log(error);
       if (error.response.data && error.response.data.error) {
         dispatch({
           type: ADD_COURSE_ERROR,
@@ -258,7 +255,6 @@ export const BootcampsProvider = ({ children }) => {
       await axios.put(`${baseAPIUrl}/courses/${courseId}`, course);
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
     } catch (error) {
-      console.log(error);
       if (error.response.data && error.response.data.error) {
         dispatch({
           type: UPDATE_COURSE_ERROR,
@@ -279,10 +275,6 @@ export const BootcampsProvider = ({ children }) => {
     try {
       await axios.delete(`${baseAPIUrl}/courses/${courseId}`);
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
-      // dispatch({
-      //   type: DELETE_COURSE_SUCCESS,
-      //   payload: { bootcampId, courseId }
-      // });
     } catch (error) {
       // console.log(error.response.data);
       if (error.response.data && error.response.data.error) {

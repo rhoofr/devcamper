@@ -23,7 +23,6 @@ import {
 } from './pages';
 import { BootcampsProvider } from './context/bootcampsContext';
 import { AuthProvider } from './context/authContext';
-import './App.css';
 
 function App() {
   return (

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import AlertContext from '../context/alert/alertContext';
 import { useAuthContext } from '../context/authContext';
 import { notifyError } from '../utils/toastNotify';
 
 const Register = props => {
-  // const alertContext = useContext(AlertContext);
-  // const { setAlert } = alertContext;
   const { register, error, clearErrors, isAuthenticated } = useAuthContext();
 
   const [user, setUser] = useState({
@@ -24,7 +21,6 @@ const Register = props => {
     }
 
     if (error) {
-      // setAlert(error, 'danger', 3000);
       notifyError(`👎 ${error}`);
       clearErrors();
     }
@@ -39,10 +35,8 @@ const Register = props => {
     e.preventDefault();
     if (name === '' || email === '' || password === '') {
       notifyError(`❕ Please enter all fields`);
-      // setAlert('Please enter all fields', 'danger', 3000);
     } else if (password !== password2) {
       notifyError(`❕ Passwords do not match`);
-      // setAlert('Passwords do not match', 'danger', 3000);
     } else {
       register({
         name,

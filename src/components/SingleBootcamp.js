@@ -4,7 +4,7 @@ import { FaCheck, FaTimes, FaPencilAlt, FaComments } from 'react-icons/fa';
 import Loading from './Loading';
 import Course from './Course';
 import { useBootcampsContext } from '../context/bootcampsContext';
-// import { baseUrl } from '../utils/constants';
+
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const SingleBootcamp = () => {
@@ -93,8 +93,6 @@ const SingleBootcamp = () => {
             >
               <FaPencilAlt /> Write a Review
             </Link>
-
-            {/* <div id='map' style='width: 100%; height: 300px;'></div> */}
 
             <ul className='list-group list-group-flush mt-4'>
               <li className='list-group-item'>
