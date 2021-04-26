@@ -7,8 +7,6 @@ import { useBootcampsContext } from '../context/bootcampsContext';
 import CourseItem from '../components/CourseItem';
 import Loading from '../components/Loading';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
-
 const ManageCoursesPage = props => {
   const { user } = useAuthContext();
   const {
@@ -111,11 +109,11 @@ const ManageCoursesPage = props => {
               <div className='card mb-3'>
                 <div className='row no-gutters'>
                   <div className='col-md-4'>
-                    {bootcamp[0].photo === 'no-photo.jpg' ? (
+                    {bootcamp[0].photo.url === 'no-photo.jpg' ? (
                       <h3 className='mt-4'>No Image</h3>
                     ) : (
                       <img
-                        src={`${baseUrl}/uploads/${bootcamp[0].photo}`}
+                        src={`${bootcamp[0].photo.url}`}
                         className='card-img'
                         alt='camp'
                       />

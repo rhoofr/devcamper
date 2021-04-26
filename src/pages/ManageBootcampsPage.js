@@ -5,8 +5,6 @@ import { useAuthContext } from '../context/authContext';
 import { useBootcampsContext } from '../context/bootcampsContext';
 import Loading from '../components/Loading';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
-
 const ManageBootcampsPage = props => {
   const { user } = useAuthContext();
   const {
@@ -33,6 +31,14 @@ const ManageBootcampsPage = props => {
     }
   }, [bootcamps, user._id]);
 
+  useEffect(() => {
+    if (error) {
+      notifyError(`👎 ${error}`);
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error]);
+
   const handleSubmitPhoto = async e => {
     e.preventDefault();
     if (!selectedFile) {
@@ -41,17 +47,16 @@ const ManageBootcampsPage = props => {
 
     setDisableButtons(true);
 
-    const data = new FormData();
-    data.append('file', selectedFile);
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = async () => {
+      await submitBootcampPhoto(bootcamp[0]._id, reader.result);
+    };
+    reader.onerror = () => {
+      console.error('reader.onerror - AHHHHHHHH!!');
+      notifyError(`👎 something went wrong!`);
+    };
 
-    await submitBootcampPhoto(bootcamp[0]._id, data);
-
-    if (error) {
-      notifyError(`👎 ${error}`);
-      clearErrors();
-    } else {
-      notifySuccess('✅ Image uploaded');
-    }
     setSelectedFile(null);
     // reset input
     e.target.reset();
@@ -169,11 +174,11 @@ const ManageBootcampsPage = props => {
                 <div className='row no-gutters'>
                   <div className='col-md-4'>
                     {bootcamp.length < 1 ||
-                    bootcamp[0].photo === 'no-photo.jpg' ? (
+                    bootcamp[0].photo.url === 'no-photo.jpg' ? (
                       <h3 className='mt-4'>No Image</h3>
                     ) : (
                       <img
-                        src={`${baseUrl}/uploads/${bootcamp[0].photo}`}
+                        src={`${bootcamp[0].photo.url}`}
                         className='card-img'
                         alt='camp'
                       />

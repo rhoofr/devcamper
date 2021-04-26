@@ -5,13 +5,10 @@ import Loading from './Loading';
 import Course from './Course';
 import { useBootcampsContext } from '../context/bootcampsContext';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
-
 const SingleBootcamp = () => {
   const { id } = useParams();
   const {
     singleBootcamp,
-    courses,
     singleBootcampLoading,
     fetchSingleBootcamp
   } = useBootcampsContext();
@@ -32,7 +29,11 @@ const SingleBootcamp = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (singleBootcampLoading) {
+  if (
+    singleBootcampLoading ||
+    !singleBootcamp ||
+    Object.keys(singleBootcamp).length === 0
+  ) {
     return <Loading />;
   }
 
@@ -50,15 +51,16 @@ const SingleBootcamp = () => {
               <span className='text-primary'>${averageCost}</span>
             </p>
 
-            {courses.map(course => {
-              return <Course key={course._id} {...course} />;
-            })}
+            {singleBootcamp &&
+              singleBootcamp.courses.map(course => {
+                return <Course key={course._id} {...course} />;
+              })}
           </div>
 
           <div className='col-md-4'>
-            {photo && photo !== 'no-photo.jpg' ? (
+            {photo && photo.url !== 'no-photo.jpg' ? (
               <img
-                src={`${baseUrl}/uploads/${photo}`}
+                src={`${photo.url}`}
                 alt='bootcamp'
                 className='img-thumbnail'
               />

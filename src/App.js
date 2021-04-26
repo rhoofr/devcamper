@@ -32,7 +32,6 @@ function App() {
           <Navbar />
           <Sidebar />
           <ToastContainer />
-          {/* <Sidebar />*/}
           <Switch>
             <Route exact path='/'>
               <Home />
@@ -73,7 +72,6 @@ function App() {
               <NotFound />
             </Route>
           </Switch>
-          {/*<Footer /> */}
         </Router>
       </BootcampsProvider>
     </AuthProvider>

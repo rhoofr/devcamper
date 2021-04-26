@@ -48,7 +48,17 @@ export const AuthProvider = ({ children }) => {
 
         dispatch({ type: USER_LOADED, payload: res.data.user });
       } catch (err) {
-        dispatch({ type: AUTH_ERROR, payload: err.response.data.error });
+        if (err.response && err.response.data && err.response.data.err) {
+          dispatch({
+            type: AUTH_ERROR,
+            payload: err.response.data.error
+          });
+        } else {
+          dispatch({
+            type: AUTH_ERROR,
+            payload: 'An error occured loading user'
+          });
+        }
       }
     }
   };
@@ -79,7 +89,17 @@ export const AuthProvider = ({ children }) => {
       });
       setAuthToken(res.data.token);
     } catch (err) {
-      dispatch({ type: REGISTER_FAIL, payload: err.response.data.error });
+      if (err.response && err.response.data && err.response.data.err) {
+        dispatch({
+          type: REGISTER_FAIL,
+          payload: err.response.data.error
+        });
+      } else {
+        dispatch({
+          type: REGISTER_FAIL,
+          payload: 'An error occured registering user'
+        });
+      }
     }
   };
 
@@ -109,7 +129,17 @@ export const AuthProvider = ({ children }) => {
       });
       setAuthToken(res.data.token);
     } catch (err) {
-      dispatch({ type: LOGIN_FAIL, payload: err.response.data.error });
+      if (err.response && err.response.data && err.response.data.err) {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: err.response.data.error
+        });
+      } else {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: 'An error occured logging in user'
+        });
+      }
     }
   };
 

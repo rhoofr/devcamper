@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const Bootcamp = ({
   _id: id,
@@ -18,9 +17,9 @@ const Bootcamp = ({
     <div className='card mb-3'>
       <div className='row no-gutters'>
         <div className='col-md-4'>
-          {photo !== 'no-photo.jpg' && (
+          {photo.url !== 'no-photo.jpg' && (
             <img
-              src={`${baseUrl}/uploads/${photo}`}
+              src={`${photo.url}`}
               alt='camp'
               className='card-img img-fluid'
             />

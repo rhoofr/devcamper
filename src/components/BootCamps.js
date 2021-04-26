@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useBootcampsContext } from '../context/bootcampsContext';
 import { notifyError } from '../utils/toastNotify';
 import Loading from './Loading';
@@ -19,6 +19,11 @@ const BootCamps = () => {
   const [zipcode, setZipcode] = useState('');
   const [averageRating, setAverageRating] = useState('any');
   const [averageCost, setAverageCost] = useState('any');
+
+  useEffect(() => {
+    fetchBootcamps(`${baseAPIUrl}/bootcamps`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleRadiusSubmit = e => {
     e.preventDefault();

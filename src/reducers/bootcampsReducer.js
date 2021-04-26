@@ -6,7 +6,6 @@ import {
   GET_BOOTCAMPS_ERROR,
   GET_SINGLE_BOOTCAMP_BEGIN,
   GET_SINGLE_BOOTCAMP_SUCCESS,
-  GET_BOOTCAMP_COURSES_SUCCESS,
   GET_SINGLE_BOOTCAMP_ERROR,
   SUBMIT_BOOTCAMP_PHOTO_SUCCESS,
   SUBMIT_BOOTCAMP_PHOTO_ERROR,
@@ -69,12 +68,6 @@ const bootcampReducer = (state, action) => {
         singleBootcampLoading: false,
         singleBootcampError: true
       };
-    case GET_BOOTCAMP_COURSES_SUCCESS:
-      return {
-        ...state,
-        courses: action.payload
-      };
-
     case SUBMIT_BOOTCAMP_PHOTO_SUCCESS:
       return {
         ...state,

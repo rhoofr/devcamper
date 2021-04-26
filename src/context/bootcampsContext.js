@@ -11,7 +11,6 @@ import {
   GET_SINGLE_BOOTCAMP_BEGIN,
   GET_SINGLE_BOOTCAMP_SUCCESS,
   GET_SINGLE_BOOTCAMP_ERROR,
-  GET_BOOTCAMP_COURSES_SUCCESS,
   SUBMIT_BOOTCAMP_PHOTO_SUCCESS,
   SUBMIT_BOOTCAMP_PHOTO_ERROR,
   DELETE_BOOTCAMP_SUCCESS,
@@ -36,7 +35,6 @@ const initialState = {
   singleBootcampLoading: false,
   singleBootcampError: false,
   singleBootcamp: {},
-  courses: [],
   error: null
 };
 
@@ -94,20 +92,6 @@ export const BootcampsProvider = ({ children }) => {
     fetchBootcamps(`${baseAPIUrl}/bootcamps/${queryParam}`);
   };
 
-  const fetchCoursesForBootcamp = async id => {
-    try {
-      const response = await axios(`${baseAPIUrl}/bootcamps/${id}/courses`);
-      const courses = response.data.data;
-
-      if (courses) {
-        dispatch({ type: GET_BOOTCAMP_COURSES_SUCCESS, payload: courses });
-      }
-    } catch (error) {
-      console.error(error);
-      dispatch({ type: GET_SINGLE_BOOTCAMP_ERROR });
-    }
-  };
-
   const fetchSingleBootcamp = async id => {
     dispatch({ type: GET_SINGLE_BOOTCAMP_BEGIN });
 
@@ -116,7 +100,6 @@ export const BootcampsProvider = ({ children }) => {
       const bootcamp = response.data.data;
 
       if (response) {
-        await fetchCoursesForBootcamp(id);
         dispatch({ type: GET_SINGLE_BOOTCAMP_SUCCESS, payload: bootcamp });
       }
     } catch (error) {
@@ -132,8 +115,12 @@ export const BootcampsProvider = ({ children }) => {
       // PUT bootcamps/5d725a1b7b292f5f8ceff788/photo
       const response = await axios.put(
         `${baseAPIUrl}/bootcamps/${bootcampId}/photo`,
-        data,
-        {}
+        {
+          body: JSON.stringify({ data }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       );
 
       dispatch({
@@ -141,7 +128,7 @@ export const BootcampsProvider = ({ children }) => {
         payload: { photo: response.data.data, id: bootcampId }
       });
     } catch (error) {
-      if (error.response.data && error.response.data.error) {
+      if (error.response && error.response.data && error.response.data.error) {
         dispatch({
           type: SUBMIT_BOOTCAMP_PHOTO_ERROR,
           payload: error.response.data.error
@@ -163,7 +150,7 @@ export const BootcampsProvider = ({ children }) => {
       dispatch({ type: DELETE_BOOTCAMP_SUCCESS, payload: id });
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data && error.response.data.error) {
+      if (error.response && error.response.data && error.response.data.error) {
         dispatch({
           type: DELETE_BOOTCAMP_ERROR,
           payload: error.response.data.error
@@ -185,7 +172,7 @@ export const BootcampsProvider = ({ children }) => {
       dispatch({ type: ADD_BOOTCAMP_SUCCESS, payload: newBootcamp.data.data });
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data && error.response.data.error) {
+      if (error.response && error.response.data && error.response.data.error) {
         dispatch({
           type: ADD_BOOTCAMP_ERROR,
           payload: error.response.data.error
@@ -213,7 +200,7 @@ export const BootcampsProvider = ({ children }) => {
       });
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data && error.response.data.error) {
+      if (error.response && error.response.data && error.response.data.error) {
         dispatch({
           type: UPDATE_BOOTCAMP_ERROR,
           payload: error.response.data.error
@@ -234,7 +221,7 @@ export const BootcampsProvider = ({ children }) => {
       await axios.post(`${baseAPIUrl}/bootcamps/${bootcampId}/courses`, course);
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
     } catch (error) {
-      if (error.response.data && error.response.data.error) {
+      if (error.response && error.response.data && error.response.data.error) {
         dispatch({
           type: ADD_COURSE_ERROR,
           payload: error.response.data.error
@@ -255,7 +242,7 @@ export const BootcampsProvider = ({ children }) => {
       await axios.put(`${baseAPIUrl}/courses/${courseId}`, course);
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
     } catch (error) {
-      if (error.response.data && error.response.data.error) {
+      if (error.response && error.response.data && error.response.data.error) {
         dispatch({
           type: UPDATE_COURSE_ERROR,
           payload: error.response.data.error
@@ -277,7 +264,7 @@ export const BootcampsProvider = ({ children }) => {
       await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
     } catch (error) {
       // console.log(error.response.data);
-      if (error.response.data && error.response.data.error) {
+      if (error.response && error.response.data && error.response.data.error) {
         dispatch({
           type: DELETE_COURSE_ERROR,
           payload: error.response.data.error

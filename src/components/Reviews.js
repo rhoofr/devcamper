@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import { useParams, Link } from 'react-router-dom';
 import { FaChevronLeft, FaPencilAlt } from 'react-icons/fa';
 import Loading from './Loading';
@@ -8,7 +9,6 @@ import Review from './Review';
 const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
 const Reviews = ({ location }) => {
-  const { name, averageRating } = location.state;
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
@@ -41,6 +41,11 @@ const Reviews = ({ location }) => {
       axiosRequest.cancel();
     };
   }, [id]);
+
+  if (!location) {
+    return <Redirect to='/' />;
+  }
+  const { name, averageRating } = location.state;
 
   if (loading) {
     return <Loading />;

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaChevronLeft } from 'react-icons/fa';
 import { notifyError } from '../utils/toastNotify';
+import { useBootcampsContext } from '../context/bootcampsContext';
 
 const baseAPIUrl = process.env.REACT_APP_BASE_API_URL;
 
@@ -17,6 +18,7 @@ const CreateReview = props => {
     reviewRating,
     reviewId
   } = props.location.state;
+  const { fetchBootcamps } = useBootcampsContext();
   const [rating, setRating] = useState(8);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -53,6 +55,9 @@ const CreateReview = props => {
           bootcamp: id
         });
       }
+
+      // Fetch bootcamps because the average rating gets calculated on the model when a review is created
+      await fetchBootcamps(`${baseAPIUrl}/bootcamps`);
 
       props.history.push({
         pathname: `/bootcamps/${id}/reviews`,
