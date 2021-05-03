@@ -31,7 +31,6 @@ What information can a user obtain and store?
 - react-multi-select-component
 - react-router-dom
 - react-toastify
-- react-tooltip
 - others...
 
 ## Dependencies
