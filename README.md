@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# DevCamper Frontend App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Project start page](/DevCamper.png)
 
-## Available Scripts
+> DevCamper App - React frontend created to be used with the DevCamper API that was written while taking Udemy course 'Node.js API Masterclass With Express & MongoDB' by Brad Traversy.
 
-In the project directory, you can run:
+## Description
 
-### `npm start`
+After taking the Node.js course I decided to write a frontend for the API. This application is the result of that. It was written using React and generated with create-react-app.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I tried to utilize most of the functionality that the backend API provided. I used Brad's static html pages as a guide for the creation of the app. The backend has been deployed to Heroku and the frontend to Netlify.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+What information can a user obtain and store?
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Authentication - Login and Register
+- CRUD ops on Bootcamps (role dependent)
+- CRUD ops on Courses (role dependent)
+- View and add reviews
+- more...
 
-### `npm run build`
+## Technologies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- axios
+- dotenv
+- create-react-app
+- react
+- react-dom
+- react-icons
+- react-multi-select-component
+- react-router-dom
+- react-toastify
+- react-tooltip
+- others...
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- All packages listed in package.json
+- The app looks for REACT_APP_BASE_API_URL in the env vars for the backend.
+- [devcamper-api](https://github.com/rhoofr/devcamper-api)
+- The API project lists the other dependencies it requires
 
-### `npm run eject`
+## Links
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Project homepage: https://github.com/rhoofr/devcamper
+- Related projects:
+  - Backend API: https://github.com/rhoofr/devcamper-api
+- [netlify-deployment](https://devcamper-hoofsoft.netlify.app/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+> You can check out the full license [here](https://github.com/rhoofr/devcamper/blob/main/LICENSE)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the terms of the **MIT** license.
